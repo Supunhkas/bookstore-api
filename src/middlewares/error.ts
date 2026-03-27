@@ -1,24 +1,46 @@
 import { Request, Response, NextFunction } from "express";
+import { ZodError } from "zod";
+import config from "../config/config.js";
 
 export interface AppError extends Error {
   statusCode?: number;
+  errors?: any[];
 }
 
 export const errorMiddleware = (
-  err: AppError,
+  err: any,
   req: Request,
   res: Response,
   next: NextFunction
 ): void => {
-  const statusCode = err.statusCode || 500;
-  const message = err.message || "Something went wrong";
+  let statusCode = err.statusCode || 500;
+  let message = err.message || "Something went wrong";
+  let errors = err.errors || undefined;
 
-  console.error(`[Error] ${statusCode} - ${message}`);
+  // Handle Zod validation errors
+  if (err instanceof ZodError) {
+    statusCode = 400;
+    message = "Validation failed";
+    errors = err.issues.map((issue) => ({
+      path: issue.path.join("."),
+      message: issue.message,
+    }));
+  }
 
-  res.status(statusCode).json({
+  // Consistent error response format
+  const response = {
+    success: false,
     status: "error",
     statusCode,
     message,
-    ...(process.env.NODE_ENV === "development" && { stack: err.stack }),
-  });
+    ...(errors && { errors }),
+    ...(config.nodeEnv === "development" && { stack: err.stack }),
+  };
+
+  if (statusCode >= 500) {
+    console.error(`[Error] ${statusCode} - ${err.message || message}`);
+    if (err.stack) console.error(err.stack);
+  }
+
+  res.status(statusCode).json(response);
 };

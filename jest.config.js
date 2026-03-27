@@ -2,10 +2,10 @@ export default {
   preset: "ts-jest",
   testEnvironment: "node",
   moduleNameMapper: {
-    "^(.+)\\.js$": "$1"
+    "^(.+)\\.js$": "$1",
   },
   transform: {
-    "^.+\\.ts$": ["ts-jest", { useESM: true }]
+    "^.+\\.ts$": ["ts-jest", { useESM: true }],
   },
-  extensionsToTreatAsEsm: [".ts"]
+  extensionsToTreatAsEsm: [".ts"],
 };

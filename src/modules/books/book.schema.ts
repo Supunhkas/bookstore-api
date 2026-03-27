@@ -5,6 +5,8 @@ export const createBookSchema = z.object({
   author: z.string().min(1, "Author is required"),
   year: z.number().int().min(0, "Year must be a positive integer"),
   genre: z.string().optional(),
+  createdAt: z.date().optional(),
+  updatedAt: z.date().optional(),
 });
 
 export const updateBookSchema = createBookSchema.partial();

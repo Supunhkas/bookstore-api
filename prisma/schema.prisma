@@ -13,4 +13,6 @@ model Book {
   author  String
   year    Int
   genre   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime? @updatedAt 
 }
