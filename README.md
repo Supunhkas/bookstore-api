@@ -56,9 +56,18 @@ npm run prisma:generate
   npm run build
   npm start
   ```
-
-### Running Tests
-
 ```bash
 npm test
 ```
+
+## API Endpoints
+
+All routes below require `Authorization: <AUTH_TOKEN>` header.
+
+| Method | Endpoint | Description | Request Body (JSON) |
+| :--- | :--- | :--- | :--- |
+| `GET` | `/books` | List all books | - |
+| `GET` | `/books/:id` | Get book details | - |
+| `POST` | `/books` | Create a book | `{ "title", "author", "year", "genre?" }` |
+| `PUT` | `/books/:id` | Update a book | `{ "title?", "author?", "year?", "genre?" }` |
+| `DELETE` | `/books/:id` | Delete a book | - |
