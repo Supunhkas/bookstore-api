@@ -28,6 +28,8 @@ describe('BookService', () => {
     author: 'Test Author',
     year: 2024,
     genre: 'Fiction',
+    createdAt: new Date(),
+    updatedAt: new Date(),
   };
 
   beforeEach(() => {

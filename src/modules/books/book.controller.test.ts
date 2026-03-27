@@ -36,6 +36,8 @@ describe('BookController', () => {
     author: 'Test Author',
     year: 2024,
     genre: 'Fiction',
+    createdAt: new Date(),
+    updatedAt: new Date(),
   };
 
   beforeEach(() => {
@@ -114,7 +116,13 @@ describe('BookController', () => {
   describe('create', () => {
     it('should create a book and return 201 Created', async () => {
       const createData = { title: 'New Book', author: 'Author', year: 2024 };
-      const createdBook: Book = { id: 2, genre: null, ...createData };
+      const createdBook: Book = {
+        id: 2,
+        genre: null,
+        ...createData,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
       mockRequest.body = createData;
       mockCreateBook.mockResolvedValue(createdBook);
 
