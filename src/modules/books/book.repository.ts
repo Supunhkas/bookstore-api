@@ -1,6 +1,6 @@
-import { prisma } from "../../db/prisma.js";
-import { Book } from "../../generated/prisma/client.js";
-import { CreateBookInput, UpdateBookInput } from "./book.schema.js";
+import { prisma } from '../../db/prisma.js';
+import { Book } from '../../generated/prisma/client.js';
+import { CreateBookInput, UpdateBookInput } from './book.schema.js';
 
 export class BookRepository {
   async getAll(): Promise<Book[]> {

@@ -1,0 +1,12 @@
+dist/
+coverage/
+
+node_modules/
+
+prisma/schema.prisma
+
+.env
+.env.*
+
+*.log
+.git/

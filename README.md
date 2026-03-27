@@ -3,6 +3,7 @@
 A simple RESTful API for managing a bookstore, built with Node.js and Express.
 
 ## Tech Stack
+
 - **Node.js**: Runtime environment
 - **Express 5**: Web framework
 - **TypeScript**: Typed JavaScript
@@ -13,10 +14,12 @@ A simple RESTful API for managing a bookstore, built with Node.js and Express.
 ## Getting Started
 
 ### Prerequisites
+
 - [Node.js](https://nodejs.org/) (v18 or higher recommended)
 - [npm](https://www.npmjs.com/)
 
 ### Installation
+
 1. Clone the repository:
    ```bash
    git clone https://github.com/Supunhkas/bookstore-api.git
@@ -31,16 +34,19 @@ A simple RESTful API for managing a bookstore, built with Node.js and Express.
    ```bash
    cp .env.example .env
    ```
-   *For Windows:* `copy .env.example .env`
+   _For Windows:_ `copy .env.example .env`
 
 ### Database Setup
+
 Generate Prisma client and run migrations:
+
 ```bash
 npm run prisma:migrate
 npm run prisma:generate
 ```
 
 ### Running the App
+
 - **Development Mode**:
   ```bash
   npm run dev
@@ -52,6 +58,7 @@ npm run prisma:generate
   ```
 
 ### Running Tests
+
 ```bash
 npm test
 ```

@@ -1,45 +1,47 @@
-import { Request, Response, NextFunction } from "express";
-import { ZodError } from "zod";
-import config from "../config/config.js";
+import { Request, Response, NextFunction } from 'express';
+import { ZodError } from 'zod';
+import config from '../config/config.js';
 
 export interface AppError extends Error {
   statusCode?: number;
-  errors?: any[];
+  errors?: unknown[];
 }
 
 export const errorMiddleware = (
-  err: any,
-  req: Request,
+  err: unknown,
+  _req: Request,
   res: Response,
-  next: NextFunction
+  _next: NextFunction,
 ): void => {
-  let statusCode = err.statusCode || 500;
-  let message = err.message || "Something went wrong";
-  let errors = err.errors || undefined;
+  const isObject = typeof err === 'object' && err !== null;
+  const error = err as AppError;
 
-  // Handle Zod validation errors
+  let statusCode = (isObject && error.statusCode) || 500;
+  let message = (isObject && error.message) || 'Something went wrong';
+  let errors = (isObject && error.errors) || undefined;
+
+  // zod erros
   if (err instanceof ZodError) {
     statusCode = 400;
-    message = "Validation failed";
+    message = 'Validation failed';
     errors = err.issues.map((issue) => ({
-      path: issue.path.join("."),
+      path: issue.path.join('.'),
       message: issue.message,
     }));
   }
 
-  // Consistent error response format
   const response = {
     success: false,
-    status: "error",
+    status: 'error',
     statusCode,
     message,
     ...(errors && { errors }),
-    ...(config.nodeEnv === "development" && { stack: err.stack }),
+    ...(config.nodeEnv === 'development' && isObject && error.stack && { stack: error.stack }),
   };
 
   if (statusCode >= 500) {
-    console.error(`[Error] ${statusCode} - ${err.message || message}`);
-    if (err.stack) console.error(err.stack);
+    console.error(`[Error] ${statusCode} - ${message}`);
+    if (isObject && error.stack) console.error(error.stack);
   }
 
   res.status(statusCode).json(response);

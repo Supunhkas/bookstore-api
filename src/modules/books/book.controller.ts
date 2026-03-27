@@ -1,7 +1,7 @@
-import { Request, Response } from "express";
-import { BookService } from "./book.service.js";
-import { createBookSchema, updateBookSchema } from "./book.schema.js";
-import { asyncHandler } from "../../utils/async-handler.js";
+import { Request, Response } from 'express';
+import { BookService } from './book.service.js';
+import { createBookSchema, updateBookSchema } from './book.schema.js';
+import { asyncHandler } from '../../utils/async-handler.js';
 
 export class BookController {
   private service: BookService;
@@ -19,13 +19,13 @@ export class BookController {
     const { id } = req.params;
     const parsedId = parseInt(id as string);
     if (isNaN(parsedId)) {
-      res.status(400).json({ error: "Invalid ID format" });
+      res.status(400).json({ error: 'Invalid ID format' });
       return;
     }
 
     const book = await this.service.getBookById(parsedId);
     if (!book) {
-      res.status(404).json({ error: "Book not found" });
+      res.status(404).json({ error: 'Book not found' });
       return;
     }
     res.status(200).json(book);
@@ -41,14 +41,14 @@ export class BookController {
     const { id } = req.params;
     const parsedId = parseInt(id as string);
     if (isNaN(parsedId)) {
-      res.status(400).json({ error: "Invalid ID format" });
+      res.status(400).json({ error: 'Invalid ID format' });
       return;
     }
 
     const validatedData = updateBookSchema.parse(req.body);
     const book = await this.service.updateBook(parsedId, validatedData);
     if (!book) {
-      res.status(404).json({ error: "Book not found" });
+      res.status(404).json({ error: 'Book not found' });
       return;
     }
     res.status(200).json(book);
@@ -58,15 +58,15 @@ export class BookController {
     const { id } = req.params;
     const parsedId = parseInt(id as string);
     if (isNaN(parsedId)) {
-      res.status(400).json({ error: "Invalid ID format" });
+      res.status(400).json({ error: 'Invalid ID format' });
       return;
     }
 
     const book = await this.service.deleteBook(parsedId);
     if (!book) {
-      res.status(404).json({ error: "Book not found" });
+      res.status(404).json({ error: 'Book not found' });
       return;
     }
-    res.status(200).json({ message: "Book deleted successfully" });
+    res.status(200).json({ message: 'Book deleted successfully' });
   });
 }

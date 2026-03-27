@@ -1,6 +1,6 @@
-import { BookRepository } from "./book.repository.js";
-import { CreateBookInput, UpdateBookInput } from "./book.schema.js";
-import { Book } from "../../generated/prisma/client.js";
+import { BookRepository } from './book.repository.js';
+import { CreateBookInput, UpdateBookInput } from './book.schema.js';
+import { Book } from '../../generated/prisma/client.js';
 
 export class BookService {
   private repository: BookRepository;

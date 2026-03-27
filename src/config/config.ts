@@ -1,4 +1,4 @@
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 
 dotenv.config();
 
@@ -10,8 +10,8 @@ interface Config {
 
 const config: Config = {
   port: Number(process.env.PORT) || 3000,
-  nodeEnv: process.env.NODE_ENV || "development",
-  authToken: process.env.AUTH_TOKEN || "my-secret-token",
+  nodeEnv: process.env.NODE_ENV || 'development',
+  authToken: process.env.AUTH_TOKEN || 'my-secret-token',
 };
 
 export default config;

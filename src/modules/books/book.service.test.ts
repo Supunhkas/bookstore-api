@@ -1,5 +1,5 @@
-import { jest, describe, it, expect, beforeEach } from "@jest/globals";
-import type { Book } from "../../generated/prisma/client.js";
+import { jest, describe, it, expect, beforeEach } from '@jest/globals';
+import type { Book } from '../../generated/prisma/client.js';
 
 const mockGetAll = jest.fn<() => Promise<Book[]>>();
 const mockGetById = jest.fn<(id: number) => Promise<Book | null>>();
@@ -7,7 +7,7 @@ const mockCreate = jest.fn<(data: unknown) => Promise<Book>>();
 const mockUpdate = jest.fn<(id: number, data: unknown) => Promise<Book>>();
 const mockDelete = jest.fn<(id: number) => Promise<Book>>();
 
-jest.unstable_mockModule("./book.repository.js", () => ({
+jest.unstable_mockModule('./book.repository.js', () => ({
   BookRepository: jest.fn().mockImplementation(() => ({
     getAll: mockGetAll,
     getById: mockGetById,
@@ -17,17 +17,17 @@ jest.unstable_mockModule("./book.repository.js", () => ({
   })),
 }));
 
-const { BookService } = await import("./book.service.js");
+const { BookService } = await import('./book.service.js');
 
-describe("BookService", () => {
+describe('BookService', () => {
   let service: InstanceType<typeof BookService>;
 
   const mockBook: Book = {
     id: 1,
-    title: "Test Book",
-    author: "Test Author",
+    title: 'Test Book',
+    author: 'Test Author',
     year: 2024,
-    genre: "Fiction",
+    genre: 'Fiction',
   };
 
   beforeEach(() => {
@@ -36,8 +36,8 @@ describe("BookService", () => {
   });
 
   // get all books
-  describe("getAllBooks", () => {
-    it("should return all books", async () => {
+  describe('getAllBooks', () => {
+    it('should return all books', async () => {
       mockGetAll.mockResolvedValue([mockBook]);
 
       const result = await service.getAllBooks();
@@ -46,7 +46,7 @@ describe("BookService", () => {
       expect(mockGetAll).toHaveBeenCalledTimes(1);
     });
 
-    it("should return an empty array when there are no books", async () => {
+    it('should return an empty array when there are no books', async () => {
       mockGetAll.mockResolvedValue([]);
 
       const result = await service.getAllBooks();
@@ -57,8 +57,8 @@ describe("BookService", () => {
   });
 
   // get book by id
-  describe("getBookById", () => {
-    it("should return a book when it exists", async () => {
+  describe('getBookById', () => {
+    it('should return a book when it exists', async () => {
       mockGetById.mockResolvedValue(mockBook);
 
       const result = await service.getBookById(1);
@@ -67,7 +67,7 @@ describe("BookService", () => {
       expect(mockGetById).toHaveBeenCalledWith(1);
     });
 
-    it("should return null when the book does not exist", async () => {
+    it('should return null when the book does not exist', async () => {
       mockGetById.mockResolvedValue(null);
 
       const result = await service.getBookById(999);
@@ -78,9 +78,9 @@ describe("BookService", () => {
   });
 
   // create book
-  describe("createBook", () => {
-    it("should create and return a new book", async () => {
-      const createInput = { title: "New Book", author: "Author", year: 2024 };
+  describe('createBook', () => {
+    it('should create and return a new book', async () => {
+      const createInput = { title: 'New Book', author: 'Author', year: 2024 };
       const createdBook: Book = { ...mockBook, ...createInput };
       mockCreate.mockResolvedValue(createdBook);
 
@@ -92,9 +92,9 @@ describe("BookService", () => {
   });
 
   // update book
-  describe("updateBook", () => {
-    it("should update and return the book when it exists", async () => {
-      const updateInput = { title: "Updated Title" };
+  describe('updateBook', () => {
+    it('should update and return the book when it exists', async () => {
+      const updateInput = { title: 'Updated Title' };
       const updatedBook: Book = { ...mockBook, ...updateInput };
 
       mockGetById.mockResolvedValue(mockBook);
@@ -107,10 +107,10 @@ describe("BookService", () => {
       expect(mockUpdate).toHaveBeenCalledWith(1, updateInput);
     });
 
-    it("should return null and skip update when the book does not exist", async () => {
+    it('should return null and skip update when the book does not exist', async () => {
       mockGetById.mockResolvedValue(null);
 
-      const result = await service.updateBook(999, { title: "Ghost" });
+      const result = await service.updateBook(999, { title: 'Ghost' });
 
       expect(result).toBeNull();
       expect(mockGetById).toHaveBeenCalledWith(999);
@@ -119,8 +119,8 @@ describe("BookService", () => {
   });
 
   // delete book
-  describe("deleteBook", () => {
-    it("should delete and return the book when it exists", async () => {
+  describe('deleteBook', () => {
+    it('should delete and return the book when it exists', async () => {
       mockGetById.mockResolvedValue(mockBook);
       mockDelete.mockResolvedValue(mockBook);
 
@@ -131,7 +131,7 @@ describe("BookService", () => {
       expect(mockDelete).toHaveBeenCalledWith(1);
     });
 
-    it("should return null and skip delete when the book does not exist", async () => {
+    it('should return null and skip delete when the book does not exist', async () => {
       mockGetById.mockResolvedValue(null);
 
       const result = await service.deleteBook(999);
